@@ -88,3 +88,8 @@ thead {
 .new-form button:hover {
   background-color: #FEFF86
 }
+
+.new-form h2 {
+  color: #FEFF86;
+  letter-spacing: 2px;
+}
