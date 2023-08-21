@@ -1,27 +1,33 @@
 <%- include('../partials/header') %>
-<form action="/flights" method="POST">
-  <label>Airlines</label>
-  <select name="airline">
-    <option>American</option>
-    <option>Southwest</option>
-    <option>United</option>
-  </select>
-  <br />
-  <label>Airport</label>
-  <select name="airport">
-    <option>AUS</option>
-    <option>DFW</option>
-    <option>DEN</option>
-    <option>LAX</option>
-    <option>SAN</option>
-  </select>
-  <br />
-  <label>Flight Number</label>
-  <input type="number" min="10" max="9999" name="flightNo" />
-  <br />
-  <label>Departure</label>
-  <input type="datetime-local" name="departs" value="<%= departsDate %>" />
-  <button type="submit">Save</button>
-</form>
-<p><%= errorMsg %></p>
+<div class="flex-center new-form">
+  <div>
+    <form action="/flights" method="POST">
+      <label>Airlines:</label>
+      <select name="airline">
+        <option>American</option>
+        <option>Southwest</option>
+        <option>United</option>
+      </select>
+      <br />
+      <label>Airport:</label>
+      <select name="airport">
+        <option>AUS</option>
+        <option>DFW</option>
+        <option>DEN</option>
+        <option>LAX</option>
+        <option>SAN</option>
+      </select>
+      <br />
+      <label>Flight Number:</label>
+      <input type="number" min="10" max="9999" name="flightNo" />
+      <br />
+      <label>Departure:</label>
+      <input type="datetime-local" name="departs" value="<%= departsDate %>" /> <br>
+      <button type="submit">Save</button>
+    </form>
+    <p><%= errorMsg %></p>
+  </div>
+</div>
+
+
 <%- include('../partials/footer') %>
