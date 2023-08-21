@@ -55,9 +55,20 @@ async function create(req, res) {
 }
 
 async function show(req, res) {
-  const flight = await Flight.findById(req.params.id);
-  res.render("flights/show", {
-    title: "Flight Details",
-    flight,
-  });
+  if (req.query.sorted === "on") {
+    const flight = await Flight.findById(req.params.id);
+    res.render("flights/show", {
+      title: "Flight Details",
+      flight,
+      checked: "checked",
+    });
+  } else {
+    const flight = await Flight.findById(req.params.id);
+    res.render("flights/show", {
+      title: "Flight Details",
+      flight,
+      checked: "",
+    });
+  }
+  
 }

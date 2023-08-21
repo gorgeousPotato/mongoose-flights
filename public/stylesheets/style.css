@@ -139,5 +139,9 @@ thead {
 }
 
 .add-destination-form button:hover {
-  background-color: #FEFF86
+  background-color: #FEFF86;
+}
+
+.first-h2 {
+  margin-top: 8rem;
 }

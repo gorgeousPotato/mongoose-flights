@@ -1,5 +1,5 @@
 <%- include('../partials/header') %>
-<h2 class="margin-left"><%= title %></h2>
+<h2 class="margin-left first-h2"><%= title %></h2>
 <section id="show-page">
   <div>Airlines:</div>
   <div><%= flight.airline %></div>
@@ -21,10 +21,44 @@
     <option>LAX</option>
     <option>SAN</option>
   </select>
-  <label>Departure:</label>
+  <label>Arrival:</label>
   <input type="datetime-local" name="arrival"/> <br>
   <button type="submit">Save</button>
 </form>
-
+<% if (flight.destinations.length) {%>
+  <table class="margin-left">
+    <thead>
+      <tr>
+        <th>Airport</th>
+        <th>Arrival</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td></td>
+        <td>
+          <form action="/flights/<%=flight._id%>" method="GET">
+            <label for="sorted">Sort by Date</label>
+            <input type="checkbox" name="sorted" <%=checked%> onChange="this.form.submit()"/>
+          </form>
+        </td>
+      </tr>
+      <% if (checked === "checked") { %>
+        <% dest = flight.destinations %>
+        <!-- <% dest = flight.destinations.sort((a,b) => a.arrival - b.arrival) %> -->
+        <%} else {%>
+          <% dest = flight.destinations %>
+        <% } %>
+      <% dest.forEach(d => { %>
+        <tr>
+          <td> <%= d.airport %></td>
+          <td> <%= d.arrival %></td>
+        </tr>
+      <% }) %>
+    </tbody>
+  </table>
+<% } else { %>
+  <h3 class="margin-left">No Destinations</h3>
+<% } %>
 
 <%- include('../partials/footer') %>
