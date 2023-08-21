@@ -5,8 +5,7 @@
     <table>
       <form action="/flights" method="GET">
         <label for="sorted">Sort by Date</label>
-        <input type="checkbox" name="sorted" <%=checked %>
-        onChange="this.form.submit()"/>
+        <input type="checkbox" name="sorted" <%="checked" %> onChange="this.form.submit()"/>
       </form>
       <thead>
         <tr>
@@ -22,19 +21,21 @@
           <td><%= flight.airline %></td>
           <td><%= flight.airport %></td>
           <td><%= flight.flightNo %></td>
-          <% const dbTime = new Date(flight.departs)%>
-          <% const now = new Date()%>
+          <% const dbTime = new Date(flight.departs)%> <% const now = new Date()%> 
           <%if (dbTime < now) {%>
-            <td> <span style="color:#19A7CE"><%= flight.departs %></span></td>
-            <%} else {%>
-            <td><%= flight.departs %></td>
-              <%} %>
+          <td>
+            <span style="color: #19a7ce"
+              ><%= flight.departs.toLocaleDateString() %></span>
+          </td>
+          <%} else {%>
+          <td><%= flight.departs.toLocaleDateString() %></td>
+          <%} %>
+          <td><a href="/flights/<%= flight._id %>">Details</a></td>
         </tr>
         <% }) %>
       </tbody>
     </table>
   </div>
 </div>
-
 
 <%- include('../partials/footer') %>

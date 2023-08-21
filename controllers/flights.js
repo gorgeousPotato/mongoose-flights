@@ -4,10 +4,11 @@ module.exports = {
   index,
   new: newFlight,
   create,
+  show,
 };
 
 async function index(req, res) {
-  if (req.query.sorted === 'on') {
+  if (req.query.sorted === "on") {
     res.render("flights/index", {
       flights: await Flight.find({}).sort({ departs: 1 }),
       title: "All flights",
@@ -41,7 +42,6 @@ function newFlight(req, res) {
 }
 
 async function create(req, res) {
-  console.log(req.body);
   try {
     await Flight.create(req.body);
     res.redirect("/flights");
@@ -52,4 +52,12 @@ async function create(req, res) {
       errorMsg: err.message,
     });
   }
+}
+
+async function show(req, res) {
+  const flight = await Flight.findById(req.params.id);
+  res.render("flights/show", {
+    title: "Flight Details",
+    flight,
+  });
 }
