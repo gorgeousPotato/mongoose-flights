@@ -14,12 +14,18 @@
 <h2 class="margin-left">Destinations</h2>
 <form class="add-destination-form" method="POST" action="/flights/<%= flight._id %>/destinations">
   <label>Airport:</label>
+  <!-- excludes the airports listed in the <select> that have already been used by other destinations and/or the flight’s airport -->
+  <% const options = ["AUS", "DFW", "DEN", "LAX", "SAN"] %>
+    <% flight.destinations.forEach(d => { %>
+      <% const idx1 = options.indexOf(d.airport); %>
+      <% options.splice(idx1, 1); %>
+    <% }) %>
+    <% const idx2 = options.indexOf(flight.airport); %>
+    <% options.splice(idx2, 1) %>
   <select name="airport">
-    <option>AUS</option>
-    <option>DFW</option>
-    <option>DEN</option>
-    <option>LAX</option>
-    <option>SAN</option>
+    <% options.forEach((o) => { %>
+      <option><%=o%></option>
+    <% }) %>
   </select>
   <label>Arrival:</label>
   <input type="datetime-local" name="arrival"/> <br>
@@ -37,6 +43,7 @@
       <tr>
         <td></td>
         <td>
+          <!-- Sorts the list of destinations for a flight by the arrival date/time in ascending order. -->
           <form action="/flights/<%=flight._id%>" method="GET">
             <label for="sorted">Sort by Date</label>
             <input type="checkbox" name="sorted" <%=checked%> onChange="this.form.submit()"/>
