@@ -92,7 +92,7 @@
             <td> <%= ticket.price %></td>
             <td>
               <form action="/tickets/<%=ticket._id %>?_method=DELETE" method="POST">
-                <button type="submit">X</button>
+                <button type="submit" class="delete-btn">X</button>
               </form>
             </td>
           </tr>

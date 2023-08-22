@@ -57,29 +57,7 @@ async function create(req, res) {
 }
 
 async function show(req, res) {
-  // if (req.query.sorted === "on") {
-  //   Flight.findById(req.params.id, function(err, flight) {
-  //     ticket.find({flight: flight._id}, function(err, tickets){
-  //       res.render("flights/show", {
-  //         title: "Flight Details",
-  //         flight,
-  //         tickets,
-  //         checked: "checked",
-  //       });
-  //     });
-  //   });
-  // } else {
-  //   Flight.findById(req.params.id, function(err, flight) {
-  //     ticket.find({flight: flight._id}, function(err, tickets){
-  //       res.render("flights/show", {
-  //         title: "Flight Details",
-  //         flight,
-  //         tickets,
-  //         checked: "",
-  //       });
-  //     });
-  //   });
-  // }
+ 
   if (req.query.sorted === "on") {
     const flight = await Flight.findById(req.params.id);
     const tickets = await Ticket.find({flight: req.params.id});

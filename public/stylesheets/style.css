@@ -164,3 +164,8 @@ thead {
 .new-ticket-btn:hover {
   background-color: #FEFF86;
 }
+
+.delete-btn {
+  border-radius: 100px;
+  border: none;
+}
