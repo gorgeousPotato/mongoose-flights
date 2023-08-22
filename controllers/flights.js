@@ -1,4 +1,5 @@
 const Flight = require("../models/flight");
+const Ticket = require("../models/ticket")
 
 module.exports = {
   index,
@@ -8,6 +9,7 @@ module.exports = {
 };
 
 async function index(req, res) {
+  //view the list of flights by departure date in ascending order
   if (req.query.sorted === "on") {
     res.render("flights/index", {
       flights: await Flight.find({}).sort({ departs: 1 }),
@@ -55,18 +57,45 @@ async function create(req, res) {
 }
 
 async function show(req, res) {
+  // if (req.query.sorted === "on") {
+  //   Flight.findById(req.params.id, function(err, flight) {
+  //     ticket.find({flight: flight._id}, function(err, tickets){
+  //       res.render("flights/show", {
+  //         title: "Flight Details",
+  //         flight,
+  //         tickets,
+  //         checked: "checked",
+  //       });
+  //     });
+  //   });
+  // } else {
+  //   Flight.findById(req.params.id, function(err, flight) {
+  //     ticket.find({flight: flight._id}, function(err, tickets){
+  //       res.render("flights/show", {
+  //         title: "Flight Details",
+  //         flight,
+  //         tickets,
+  //         checked: "",
+  //       });
+  //     });
+  //   });
+  // }
   if (req.query.sorted === "on") {
     const flight = await Flight.findById(req.params.id);
+    const tickets = await Ticket.find({flight: req.params.id});
     res.render("flights/show", {
       title: "Flight Details",
       flight,
+      tickets,
       checked: "checked",
     });
   } else {
     const flight = await Flight.findById(req.params.id);
+    const tickets = await Ticket.find({flight: req.params.id});
     res.render("flights/show", {
       title: "Flight Details",
       flight,
+      tickets,
       checked: "",
     });
   }

@@ -1,71 +1,112 @@
 <%- include('../partials/header') %>
-<h2 class="margin-left first-h2"><%= title %></h2>
-<section id="show-page">
-  <div>Airlines:</div>
-  <div><%= flight.airline %></div>
-  <div>Airport:</div>
-  <div><%= flight.airport %></div>
-  <div>Flight Number:</div>
-  <div><%= flight.flightNo %></div>
-  <div>Departure:</div>
-  <div><%= flight.departs %></div>
+<section class="flight-details">
+  <h2><%= title %></h2>
+  <div id="show-page">
+    <div>Airlines:</div>
+    <div><%= flight.airline %></div>
+    <div>Airport:</div>
+    <div><%= flight.airport %></div>
+    <div>Flight Number:</div>
+    <div><%= flight.flightNo %></div>
+    <div>Departure:</div>
+    <div><%= flight.departs %></div>
+  </div> 
 </section>
 <br>
-<h2 class="margin-left">Destinations</h2>
-<form class="add-destination-form" method="POST" action="/flights/<%= flight._id %>/destinations">
-  <label>Airport:</label>
-  <!-- excludes the airports listed in the <select> that have already been used by other destinations and/or the flight’s airport -->
-  <% const options = ["AUS", "DFW", "DEN", "LAX", "SAN"] %>
-    <% flight.destinations.forEach(d => { %>
-      <% const idx1 = options.indexOf(d.airport); %>
-      <% options.splice(idx1, 1); %>
-    <% }) %>
-    <% const idx2 = options.indexOf(flight.airport); %>
-    <% options.splice(idx2, 1) %>
-  <select name="airport">
-    <% options.forEach((o) => { %>
-      <option><%=o%></option>
-    <% }) %>
-  </select>
-  <label>Arrival:</label>
-  <input type="datetime-local" name="arrival"/> <br>
-  <button type="submit">Save</button>
-</form>
-<% if (flight.destinations.length) {%>
-  <table class="margin-left">
-    <thead>
-      <tr>
-        <th>Airport</th>
-        <th>Arrival</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td></td>
-        <td>
-          <!-- Sorts the list of destinations for a flight by the arrival date/time in ascending order. -->
-          <form action="/flights/<%=flight._id%>" method="GET">
-            <label for="sorted">Sort by Date</label>
-            <input type="checkbox" name="sorted" <%=checked%> onChange="this.form.submit()"/>
-          </form>
-        </td>
-      </tr>
-      <% if (checked === "checked") { %>
-        <% dest = flight.destinations %>
-        <!-- <% dest = flight.destinations.sort((a,b) => a.arrival - b.arrival) %> -->
-        <%} else {%>
-          <% dest = flight.destinations %>
-        <% } %>
-      <% dest.forEach(d => { %>
-        <tr>
-          <td> <%= d.airport %></td>
-          <td> <%= d.arrival %></td>
-        </tr>
+<section>
+  <h2 class="margin-left">Destinations</h2>
+  <form class="add-destination-form" method="POST" action="/flights/<%= flight._id %>/destinations">
+    <label>Airport:</label>
+    <!-- excludes the airports listed in the <select> that have already been used by other destinations and/or the flight’s airport -->
+    <% const options = ["AUS", "DFW", "DEN", "LAX", "SAN"] %>
+      <% flight.destinations.forEach(d => { %>
+        <% const idx1 = options.indexOf(d.airport); %>
+        <% options.splice(idx1, 1); %>
       <% }) %>
-    </tbody>
-  </table>
-<% } else { %>
-  <h3 class="margin-left">No Destinations</h3>
-<% } %>
+      <% const idx2 = options.indexOf(flight.airport); %>
+      <% options.splice(idx2, 1) %>
+    <select name="airport">
+      <% options.forEach((o) => { %>
+        <option><%=o%></option>
+      <% }) %>
+    </select>
+    <label>Arrival:</label>
+    <input type="datetime-local" name="arrival"/> <br>
+    <button type="submit">Save</button>
+  </form>
+  <% if (flight.destinations.length) {%>
+    <table class="margin-left">
+      <thead>
+        <tr>
+          <th>Airport</th>
+          <th>Arrival</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td></td>
+          <td>
+            <!-- Sorts the list of destinations for a flight by the arrival date/time in ascending order. -->
+            <form action="/flights/<%=flight._id%>" method="GET">
+              <label for="sorted">Sort by Date</label>
+              <input type="checkbox" name="sorted" <%=checked%> onChange="this.form.submit()"/>
+            </form>
+          </td>
+        </tr>
+        <% if (checked === "checked") { %>
+          <% dest = flight.destinations %>
+          <!-- <% dest = flight.destinations.sort((a,b) => a.arrival - b.arrival) %> -->
+          <%} else {%>
+            <% dest = flight.destinations %>
+          <% } %>
+        <% dest.forEach(d => { %>
+          <tr>
+            <td> <%= d.airport %></td>
+            <td> <%= d.arrival %></td>
+          </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  <% } else { %>
+    <h3 class="margin-left">No Destinations</h3>
+  <% } %>
+</section>
+
+<!-- displays the tickets if there are any -->
+
+  <section class="margin-left">
+    <% if (tickets.length) {%>
+    <h2>Tickets</h2>
+    <table class="tickets-table">
+      <thead>
+        <tr>
+          <th>Seat</th>
+          <th>Price</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody> 
+        <% tickets.forEach(ticket => { %>
+          <tr>
+            <td> <%= ticket.seat %></td>
+            <td> <%= ticket.price %></td>
+            <td>
+              <form action="/tickets/<%=ticket._id %>?_method=DELETE" method="POST">
+                <button type="submit">X</button>
+              </form>
+            </td>
+          </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  <% } else { %>
+    <h3 class="margin-left">No Tickets</h3>
+  <% } %>
+  
+  <form action="/flights/<%= flight._id %>/tickets/new" method="GET">
+  <button class="new-ticket-btn" type="submit">New Ticket</button>
+  </form>
+  </section>
+  
 
 <%- include('../partials/footer') %>

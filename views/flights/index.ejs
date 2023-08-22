@@ -21,6 +21,7 @@
           <td><%= flight.airline %></td>
           <td><%= flight.airport %></td>
           <td><%= flight.flightNo %></td>
+          <!-- the flights in the list to be displayed using red text if the flight’s departure date has passed -->
           <% const dbTime = new Date(flight.departs)%> <% const now = new Date()%> 
           <%if (dbTime < now) {%>
           <td>

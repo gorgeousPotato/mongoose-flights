@@ -1,0 +1,19 @@
+<%- include('../partials/header') %>
+<div class="flex-center new-form">
+  <div>
+    <h2><%= title %></h2>
+    <form action="/flights/<%= flightId %>/tickets" method="POST">
+      <label>Seat</label>
+      <input type="text" name="seat" placeholder="seat number">
+      <br />
+      <label>Price</label>
+      <input type="number" name="price">
+      <br />
+      <button type="submit">Save</button>
+    </form>
+    <p><%= errorMsg %></p>
+  </div>
+</div>
+
+
+<%- include('../partials/footer') %>

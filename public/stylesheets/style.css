@@ -99,7 +99,6 @@ thead {
   display: grid;
   grid-template-columns: auto auto;
   grid-gap: 1rem;
-  margin-left: 8rem;
   width: 60%;
 }
 
@@ -119,7 +118,7 @@ thead {
   display: grid;
   grid-template-columns: auto auto;
   gap: 1rem;
-  width: 40%;
+  width: 24rem;
 }
 
 .add-destination-form input[type="submit"] {
@@ -133,15 +132,35 @@ thead {
   font: 20px "Lucida Grande", Helvetica, Arial, sans-serif;
   border: none;
   border-radius: 100px;
-  margin: 2.4rem auto 0;
   background-color: #AFD3E2;
-  color: #146C94
+  color: #146C94;
+  grid-column-start: 1;
+  grid-row-start: 3;
 }
 
 .add-destination-form button:hover {
   background-color: #FEFF86;
 }
 
-.first-h2 {
-  margin-top: 8rem;
+.tickets-table {
+  margin-top:1rem;
+  width: 24rem;
+}
+
+.flight-details {
+  margin-left: 8rem;
+  margin-top: 0;
+}
+
+.new-ticket-btn {
+    padding: 0.4rem 2rem;
+    font: 20px "Lucida Grande", Helvetica, Arial, sans-serif;
+    border: none;
+    border-radius: 100px;
+    background-color: #AFD3E2;
+    color: #146C94;
+}
+
+.new-ticket-btn:hover {
+  background-color: #FEFF86;
 }
